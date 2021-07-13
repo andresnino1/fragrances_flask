@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+
+                <label for="exampleInputEmail1" class="form-label">{{ form.username.label }}</label>
+                {{ form.username(class="form-control") }}
+
+                <div class="mb-3">
+
+                    <label for="exampleInputEmail1" class="form-label">{{ form.password.label }}</label>
+                    {{ form.password(class="form-control") }}
+
+
+                </div>
+                <div class="mb-3 form-check">
+
+                    {{ form.remember_me(class="form-check-input") }}
+                    <label class="form-check-label" for="exampleCheck1">{{ form.remember_me.label }}</label>
+
+
+                </div>
+                <button type="submit" class="btn btn-primary">LogIn</button>
+        </form>
+    </div>
+
+
+{% endblock %}
