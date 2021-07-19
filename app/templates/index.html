@@ -1,14 +1,14 @@
 {%  extends "base.html" %}
 {% block content %}
-<h1>hello {{ user.username }}!</h1>
+<h1>hello {{ current_user.username }}!</h1>
 
 <h2>List of Fragrances</h2>
-
-{% for fragrance in fragrances %}
-    <div><p>{{ fragrance.fragrance_code }}</p></div>
-    <div><p>{{ fragrance.user.username }}</p></div>
-    <div><p>{{ fragrance.commercial_name }}</p></div>
-    <div>{{ clave }}</div>
-{% endfor %}
+{##}
+{#{% for fragrance in fragrances %}#}
+{#    <div><p>{{ fragrance.fragrance_code }}</p></div>#}
+{#    <div><p>{{ fragrance.user.username }}</p></div>#}
+{#    <div><p>{{ fragrance.commercial_name }}</p></div>#}
+{#    <div>{{ clave }}</div>#}
+{#{% endfor %}#}
 
 {% endblock %}

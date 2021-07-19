@@ -7,12 +7,25 @@
             {{ form.hidden_tag() }}
             <div class="mb-3">
 
-                <label for="exampleInputEmail1" class="form-label">{{ form.username.label }}</label>
+                {{ form.username.label(class="form-control-label") }}
                 {{ form.username(class="form-control") }}
+
+                <!-- esta parte habilita los validadores del formulario  SE IMPLEMENTARA EN UN FUTURO -->
+{#                {% if form.username.errors %}#}
+{#                    {{ form.username(class="form-control is-invalid") }}#}
+{#                    <div class="invalid-feedback">#}
+{#                        {% for error in form.username.errors %}#}
+{#                            <span>{{ error }}</span>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                {% else %}#}
+{#                    {{ form.username(class="form-control") }}#}
+{#                {% endif %}#}
+                <!-- fin de los validadores del formulario -->
 
                 <div class="mb-3">
 
-                    <label for="exampleInputEmail1" class="form-label">{{ form.password.label }}</label>
+                    {{ form.password.label(class="form-label") }}
                     {{ form.password(class="form-control") }}
 
 
@@ -20,11 +33,12 @@
                 <div class="mb-3 form-check">
 
                     {{ form.remember_me(class="form-check-input") }}
-                    <label class="form-check-label" for="exampleCheck1">{{ form.remember_me.label }}</label>
+                    {{ form.remember_me.label(class=("from-check-label")) }}
 
 
                 </div>
-                <button type="submit" class="btn btn-primary">LogIn</button>
+                {{ form.submit(class=("btn btn-primary")) }}
+            </div>
         </form>
     </div>
 

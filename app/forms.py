@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DecimalField, DateField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Email, Length
 
 
 # en esta clase de define el formulario de Login usuarios registrados
@@ -17,7 +17,7 @@ class LoginForm(FlaskForm):
 
 class AddNewUser(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Add User')
