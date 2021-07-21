@@ -21,7 +21,7 @@
 
 <!-- barra de navegacion -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('index') }}">Fragrances</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -34,12 +34,12 @@
                 <a class="nav-link" href="#">Fragrances</a>
                 <a class="nav-link" href="{{ url_for('add_fragrance') }}">New Fragrance</a>
                 {% if current_user.is_anonymous %}
-                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    <a class="nav-link btn btn-primary" href="{{ url_for('login') }}">Login</a>
                 {% else %}
-                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    <a class="nav-link btn btn-primary" href="{{ url_for('logout') }}">Logout</a>
                 {% endif %}
 
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+
             </div>
         </div>
     </div>

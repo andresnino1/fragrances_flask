@@ -1,9 +1,14 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DecimalField, DateField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from app.models import User
 
 
-# en esta clase de define el formulario de Login usuarios registrados
+# ===================================================================================================== #
+# ===================================================================================================== #
+# ============================= FORMULARIO DE LOGIN USUARIOS REGISTRADOS ============================== #
+# ===================================================================================================== #
+# ===================================================================================================== #
 
 
 class LoginForm(FlaskForm):
@@ -12,17 +17,41 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
-# en esta clase se define el formulario para agregar nuevos usuarios
+
+# ===================================================================================================== #
+# ===================================================================================================== #
+# ================================== FORMULARIO DE REGISTRO NUEVOS USUARIOS =========================== #
+# ===================================================================================================== #
+# ===================================================================================================== #
 
 
-class AddNewUser(FlaskForm):
+class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Add User')
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
 
-# en esta clase de define el fomulario de ingreso de nuevas fragrancias
+    # este metodo valida el formulario de registro para que el usuario registrado y email sean unicos
+    # Estos son metodos que proporciona WTF para validar, se usa la palabra validate_ seguida del nombre
+    # del cambo que se quiere validar.
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different username.')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email.')
+
+
+# ===================================================================================================== #
+# ===================================================================================================== #
+# =========================== FORMULARIO DE INGRESO DE NUEVAS FRAGRANCIASS ============================ #
+# ===================================================================================================== #
+# ===================================================================================================== #
 
 
 class AddNewFragrance(FlaskForm):

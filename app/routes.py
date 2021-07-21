@@ -1,7 +1,7 @@
-from app import app  # se importa app desde el archivo __init__ que esta dentro de la carpeta app
+from app import app, db  # se importa app desde el archivo __init__ que esta dentro de la carpeta app
 from werkzeug.urls import url_parse
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm
+from app.forms import LoginForm, RegistrationForm
 from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -54,7 +54,7 @@ def login():
 
 
 #  ==================================================================================================================
-#  ============================================LOGOUT================================================================
+#  =========================================== LOGOUT ===============================================================
 #  ==================================================================================================================
 
 
@@ -65,12 +65,34 @@ def logout():
 
 
 #  ==================================================================================================================
-#  ============================================ADD FRAGRANCES =======================================================
+#  =========================================== ADD FRAGRANCES =======================================================
 #  ==================================================================================================================
 
 
 @app.route('/addfragrance')
 @login_required
 def add_fragrance():
-    return render_template('add_fragrance.html', title='Add Fragrance')
 
+    if current_user.username == 'admin':
+        return render_template('add_fragrance.html', title='Add Fragrance')
+    flash('YOU ARE NOT ADMIN', 'danger')
+    return redirect(url_for('index'))
+
+#  ==================================================================================================================
+#  =========================================== REGISTER =============================================================
+#  ==================================================================================================================
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))  # si el usuario intenta registrarse de nuevo se redirecciona al index
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        # si el formulario es valido se ingresa el nuevo usuario a la base de datos
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations New User Registered', 'success' )
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
